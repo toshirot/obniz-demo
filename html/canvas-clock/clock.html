@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>canvas clock</title>
+    <script src="https://unpkg.com/obniz@1.4.5/obniz.js" crossorigin="anonymous"></script>
+    <style>
+      body {
+        margin:0
+      }
+    </style>
+
+<script>
+let canvasClock = {
+
+    init: function (id) {
+        this.canvas = document.getElementById(id);
+        this.ctx = this.canvas.getContext('2d');
+
+        this.zero = -90 * 2 * Math.PI / 360;
+        this.plus90 = 90 * 2 * Math.PI / 360;
+
+        var that = this
+        setInterval(function () {
+            that.clock()
+        }, 1);
+
+    },
+    clock: function () {
+        this.now = this.getNow();
+        this.now.hour12 = 
+            this.now.hour >= 12 ? 
+                this.now.hour - 12 : this.now.hour;
+        this.clockText = this.mkDigital(this.now);
+
+        this.canvas.width = this.canvas.width;
+        this.ctx.translate(64, 32);
+        this.ctx.scale(1, 1);
+
+       // this.minScale(this.ctx);
+        this.hourScale(this.ctx);
+        this.ctx.rotate(this.zero);
+
+        this.hour(this.ctx);
+        this.min(this.ctx);
+        this.sec(this.ctx);
+
+        obniz.display.draw(this.ctx);// ObnizへGo!
+
+        // this.clockStr(this.ctx);
+
+    },
+    hourScale: function (ctx) {
+        //時間目盛を描く
+        ctx.beginPath();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#fff";
+        ctx.lineCap = "butt";
+        for (var i = 0; i < 12; i++) {
+            ctx.moveTo(32, 0);
+            ctx.lineTo(28, 0);
+            ctx.rotate(Math.PI / 6);
+        }
+        ctx.stroke();
+    },
+    minScale: function (ctx) {
+        ctx.beginPath();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#fff";
+        ctx.lineCap = "butt";
+        for (var i = 0; i < 60; i++) {
+            if (i % 5 != 0) {
+                ctx.moveTo(29, 0);
+                ctx.lineTo(32, 0);
+            }
+            ctx.rotate(Math.PI / 30);
+        }
+        ctx.stroke();
+    },
+    hour: function (ctx) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = "#fff";
+        ctx.rotate(
+            (this.now.hour12 * 60 * 60 
+            + this.now.min * 60 
+            + this.now.sec) * (2 * Math.PI) / (12 * 60 * 60)
+        );
+        ctx.moveTo(0, 0);
+        ctx.lineTo(18, 0);
+        ctx.stroke();
+        ctx.restore();
+    },
+    min: function (ctx) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = "#fff";
+        ctx.rotate(
+            (this.now.min  * 60 
+            + this.now.sec) * (2 * Math.PI) / (60 * 60)
+        );
+        ctx.moveTo(0, 0);
+        ctx.lineTo(24, 0);
+        ctx.stroke();
+        ctx.restore();
+    },
+    sec: function (ctx) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "#fff";
+        ctx.rotate((this.now.sec *1000+this.now.msec ) * (2 * Math.PI) / (60*1000));
+        ctx.moveTo(0, 0);
+        ctx.lineTo(34, 0);
+        ctx.stroke();
+        ctx.restore();
+    },
+    clockStr: function (ctx) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.rotate(this.plus90);
+        ctx.translate(-100, -20);
+        ctx.font = "bold 32px 'Good Times'";
+        ctx.fillStyle = "#ccc";
+        ctx.fillText(this.clockText, 20, 60);
+        ctx.stroke();
+        ctx.restore();
+    },
+    getNow: function () {
+        var now = new Date();
+        return {
+            hour: now.getHours(),//時
+            min: now.getMinutes(),//分
+            sec: now.getSeconds(), //秒
+            msec: now.getMilliseconds() //ミリ秒
+        }
+    },
+    mkDigital: function (now) {
+        var H = (now.hour < 10) ? ('0' + now.hour) : now.hour;
+        var M = (now.min < 10) ? ('0' + now.min) : now.min;
+        var S = (now.sec < 10) ? ('0' + now.sec) : now.sec;
+        return H + ':' + M + ' ' + S
+    }
+}
+
+
+const obniz = new Obniz("1234-5678");//1234-5678は自分のobnizIDに書き換える
+
+obniz.onconnect = async function () {
+
+  // id hoge に時計を描画します
+  canvasClock.init('hoge');
+
+}
+
+</script>
+
+  </head>
+
+  <body>
+    <article>
+      <canvas id="hoge" width="128" height="64"></canvas>
+    </article>
+  </body>
+
+</html>

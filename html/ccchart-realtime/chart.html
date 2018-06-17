@@ -1,0 +1,71 @@
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://obniz.io/js/jquery-3.2.1.min.js"></script>
+  <script src="https://unpkg.com/obniz@1.4.5/obniz.js" crossorigin="anonymous"></script>
+  <script src="https://ccchart.org/js/ccchart-v1.12.090.js" charset="utf-8"></script>
+</head>
+<body>
+
+
+<!--キャンバス ここにチャートを出力します-->
+<canvas id="hoge"></canvas>
+
+
+<script>
+
+//チャートの設定 
+let chartdata = {
+
+  "config": {
+
+      "onlyChart":"yes", //値や凡例無しのチャートだけモード
+      "type": "bar", //bar チャート
+
+      "barWidth": 4, //バーの幅
+
+      //Canvas size
+      "width":128, //キャンバスの幅 Obnizのディスプレイ幅
+      "height":64, //キャンバスの高 Obnizのディスプレイ高
+
+      //attributes not used
+      "useShadow":"no", //影は使わない 白黒だし
+
+      //Axis X
+      "axisXLen":3, //X軸 3だと3+1本(4本)※これ判りにくいからそのうちlengthに変えるべきかなぁ
+      "axisXWidth":1, //X軸の太さ
+      "xColor":"#fff", //X軸の色
+
+      "axisYLen":0, //Y軸は無し
+
+      //Bar color
+      "colorSet": ["#fff"], //バーの色
+  },
+
+  "data": [
+    ["month"],
+    ["data1"]
+  ]
+};
+
+//obniz インスタンスを作る
+const obniz = new Obniz("1234-5678");//1234-5678は自分のobnizIDに書き換える
+
+  //ここで インスタンス名をobnizにすると
+  //ccchart-v1.12.090.jsの暫定実装版では
+  //下記oneColAtATimeが自動的にobniz出力してくれます。簡単＾＾！
+
+//obniz に接続できたら実行する内容
+obniz.onconnect = async function () {
+
+  ccchart
+      .init('hoge', chartdata)
+      .ws('wss://ccchart.com:8015')
+      .on('message', ccchart.wscase.oneColAtATime)
+
+}
+</script>
+</body>
+</html>  
