@@ -3,7 +3,7 @@ Obniz Demo
 
 
 
-| type | img | link |
+| Type | Img/Tweet | Link |
 |:---|:---:|:---|
 |node|<img width=256 src="https://pbs.twimg.com/media/Df0y3GNUcAALs1M.jpg"  title="自分のサーバーから Node.js で obniz に Hello Obniz!">|自分のサーバーから Node.js で obniz に Hello Obniz!<br>Github: https://github.com/toshirot/obniz-demo/tree/master/demo-node/hello<br>Qiita: https://qiita.com/toshirot/items/0222ef1f494b21060134|
 |html|[link](https://twitter.com/toshirot/status/1006487050692935680) |ccchart-v1.12.090にObniz のリアルタイムチャート描画を暫定実装してみた<br>Github: https://github.com/toshirot/obniz-demo/tree/master/demo-html/ccchart-realtime<br>Qiita: https://qiita.com/toshirot/items/01afe0352aac9bbb6797|
