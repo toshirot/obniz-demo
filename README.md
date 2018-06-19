@@ -3,7 +3,7 @@ Obniz Demo
 
 
 
-| Type | Img or Tweet | Links |
+| Type | Img/Tweet | Links |
 |:---|:---:|:---|
 |node|<a href="https://twitter.com/toshirot/status/1008394524152852480" target="_blank"><img width=512 src="https://ccchart.org/test/obniz/img/private.jpg"  title="Obniz ディスプレイへアクセストークンを使ってNode.jsで表示してみる。"></a>|Obniz ディスプレイへアクセストークンを使ってNode.jsで表示してみる<br><br>Github: https://github.com/toshirot/obniz-demo/tree/master/demo-node/hello<br>Qiita: https://qiita.com/toshirot/items/37d2a37ea1d33893957f|
 |node|<a href="https://qiita.com/toshirot/items/0222ef1f494b21060134" target="_blank"><img width=512 src="https://pbs.twimg.com/media/Df0y3GNUcAALs1M.jpg"  title="自分のサーバーから Node.js で obniz に Hello Obniz!"></a>|自分のサーバーから Node.js で obniz に Hello Obniz!<br><br>Github: https://github.com/toshirot/obniz-demo/tree/master/demo-node/hello<br>Qiita: https://qiita.com/toshirot/items/0222ef1f494b21060134|
